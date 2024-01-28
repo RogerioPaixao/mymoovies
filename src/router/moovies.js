@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const mooviesController = require('../controllers/mooviesController')
 
-router.get('/', function(req, res){
-    res.send("ENTREI EM MOOVIES")
-  });
+router.get('/', mooviesController.findAll);
+router.get('/:id', mooviesController.find);
+router.post('/', mooviesController.create);
+router.delete('/:id', mooviesController.delite);
 
   module.exports = router;

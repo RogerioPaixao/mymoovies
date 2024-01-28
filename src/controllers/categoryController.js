@@ -28,7 +28,7 @@ const categoryController = {
          },
       )
     },
-    criate(req, res){
+    create(req, res){
         const {name, descripition} = req.body;
         /**
          * Aqui emtraria a regra de persistencia do BD
