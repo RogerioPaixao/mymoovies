@@ -11,11 +11,11 @@
         -category.js
     -bd
 
--inde.js
--packge.json
--packge-lock.json
-    -.env
-    -.env.example
-    -.gitignore
--readme.md
+    -inde.js
+    -packge.json
+    -packge-lock.json
+        -.env
+        -.env.example
+        -.gitignore
+    -readme.md
 """
