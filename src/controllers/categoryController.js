@@ -1,20 +1,18 @@
-const { param } = require("../router/moovies");
+
+const db = require("../bd");
 
 const categoryController = {
 
-    findAll(req, res){
-        /**
-         * Aqui emtraria a regra de persistencia do BD
-         */
-        res.json([
-            { id:"01", 
-            nome:"Filmes A",
-             descripition:"Filmes com a Letra A"
-        },
-        { id:"02", 
-        nome:"Filmes B",
-         descripition:"Filmes com a Letra B"
-    }])
+    async findAll(req, res) {
+       try {
+
+        const category = await db.query('SELECT * FROM teste');
+        res.json(category.rows);
+
+       } catch (error) {
+        res.status(500).json({error: error.mensagem});
+        
+       }
     },
 
     find(req, res){
