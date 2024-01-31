@@ -1,50 +1,65 @@
-
 const db = require("../bd");
+const CategoryController = {
+  async findAll(req, res) {
+    try {
+      const category = await db.query("SELECT * FROM category");
+      res.json(category.rows);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 
-const categoryController = {
+  async find(req, res) {
+    const { id } = req.params;
 
-    async findAll(req, res) {
-       try {
+    try {
+      const category = await db.query("SELECT * FROM category WHERE id = $1", [
+        id,
+      ]);
 
-        const category = await db.query('SELECT * FROM teste');
-        res.json(category.rows);
+      if (category.rows.length > 0) {
+        res.json(category.rows[0]);
+      } else {
+        res.status(404).json({ error: " Ateção Categoria não encontrada" });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 
-       } catch (error) {
-        res.status(500).json({error: error.mensagem});
-        
-       }
-    },
+  async create(req, res) {
+    const { name, description } = req.body;
 
-    find(req, res){
-       const {id} = req.params;
-       /**
-         * Aqui emtraria a regra de persistencia do BD
-         */
-        res.json({ id:id, 
-                   nome:"Filmes A",
-                   descripition:"Filmes com a Letra A"
-         },
-      )
-    },
-    create(req, res){
-        const {name, descripition} = req.body;
-        /**
-         * Aqui emtraria a regra de persistencia do BD
-         */
-        res.json({ id:Number.MAX_SAFE_INTEGER, 
-            nome:name,
-            descripition:descripition,
-        });
-    },
-        
-    delite(req, res){
-        const {id} = req.body;
-        /**
-         * Aqui emtraria a regra de persistencia do BD
-         */
-        res.status(204).json();
-    },
+    try {
+      const newCategory = await db.query(
+        "INSERT INTO category (name, description) VALUES ($1, $2) RETURNING *",
+        [name, description]
+      );
 
-}
+      res.status(201).json(newCategory.rows[0]);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 
-module.exports = categoryController
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      const result = await db.query(
+        "DELETE FROM category WHERE id = $1 RETURNING *",
+        [id]
+      );
+
+      if (result.rowCount > 0) {
+        res.status(204).json({});
+      }
+
+      res.status(304).json({});
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+};
+
+module.exports = CategoryController;

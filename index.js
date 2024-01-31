@@ -1,17 +1,19 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mooviesRouter = require("./src/router/moovies");
-const categoryRouter = require("./src/router/category");
 
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mooviesRoutes = require("./src/routes/moovies");
+const categoryRoutes = require("./src/routes/category");
 
 const app = express();
-const PORT= process.env.PORT|| 3000
+const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/moovies', mooviesRouter);
-app.use('/category', categoryRouter);
+app.use("/moovies", mooviesRoutes);
+app.use("/category", categoryRoutes);
 
-app.listen(PORT, () =>{
- console.log(`serven ruuning on http://localhost:${PORT}`)
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
