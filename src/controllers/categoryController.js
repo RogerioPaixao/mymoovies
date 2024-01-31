@@ -41,7 +41,25 @@ const CategoryController = {
       res.status(500).json({ error: error.message });
     }
   },
+  
+  // Função para obter o filme específico
+    
+  async updatemoovies(req, res){
+    try {
 
+      const index = this.category.findIndex(category => Number(category.id) === Number(id));
+
+      if(index !== -1){
+
+        this.addcategory[index] = { ...index.category[index], ...updatecategory}
+      };
+      res.status(404).json({ error: "Filme Atualizado com Sucesso!" });
+
+    } catch (error) {
+
+      res.status(500).json({ error: error.message });
+    }
+   },
   async delete(req, res) {
     const { id } = req.params;
 

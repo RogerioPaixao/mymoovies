@@ -49,7 +49,7 @@ const MooviesController = {
   async create(req, res) {
     const { title, description, category_id, realease_date } = req.body;
 
-    // É necessário realizar uma validação pelo id de categoria
+    // validação pelo id da categoria
 
     try {
       const newMoovie = await db.query(
@@ -63,6 +63,22 @@ const MooviesController = {
       res.status(500).json({ error: error.message });
     }
   },
+   async updatemoovies(req, res){
+    try {
+
+      const index = this.moovies.findIndex(moovies => Number(moovies.id) === Number(id));
+
+      if(index !== -1){
+
+        this.addmoovies[index] = { ...index.moovies[index], ...updatemoovies}
+      };
+      res.status(404).json({ error: "Filme Atualizado com Sucesso!" });
+
+    } catch (error) {
+
+      res.status(500).json({ error: error.message });
+    }
+   },
 
   async delete(req, res) {
     const { id } = req.params;
